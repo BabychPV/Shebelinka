@@ -1,5 +1,3 @@
-
-
 USE [PI_Temp]
 GO
 
@@ -171,7 +169,7 @@ BEGIN
 					,convert(int,[TankNumber])
 					,convert (nvarchar(100),[AttributeName])
 					,convert (nvarchar(20),[Value])
-				FROM [LINKEDAF].[ØÂÏÃÊÍ].[Asset].ReportOfTank	
+				FROM [LINKEDAF].[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½].[Asset].ReportOfTank	
 				
 				INSERT INTO [dbo].[ReportMidnight]
 						   ([MidnightID]
