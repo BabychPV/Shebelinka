@@ -153,15 +153,14 @@ GO
 CREATE PROCEDURE [dbo].[reportStructureMovement2ProductsGroup_Test_01] 
 	@StartDate nvarchar(24),
 	@EndDate  nvarchar(24),
-	@ProductionName nvarchar(max)
+	@structureId int
 AS
 SET NOCOUNT ON
 SET XACT_ABORT ON
 --///////////////////////////////////////
 --//////////////////////////////////
 declare	@caseIdBeg int,
-	@caseIdEnd int,
-	@structureId int;
+	@caseIdEnd int;
 
 
 	SET @caseIdBeg = (SELECT TOP (1) [Id]
@@ -172,9 +171,10 @@ declare	@caseIdBeg int,
 	FROM [idrms].[dbo].[Cases]
 	WHERE [StartTime] = dateadd (ss,0,dateadd (mi,0,dateadd (hh,06,convert (datetime,CAST( convert(datetime, @EndDate, 120) AS Date ) )))))
 
-	SET @structureId = (SELECT top(1) T1.[Id]
-	FROM [idrms].[dbo].[Objects] T1
-	where [Name] = @ProductionName)
+	--SET @structureId = (SELECT top(1)  T1.[Id]
+	--FROM [idrms].[dbo].[Objects] T1
+	--where [Name] = @ProductionName and ObjectTypeId = 1)
+	--where [Name] in (select * from [idrms].[dbo].[ufnSplit_Test_01] (@ProductionName,',') )
 
 exec dbo.reportStructureMovement2ProductsGroup_from1C_Test_01 @caseIdBeg,@caseIdEnd,@structureId
 
@@ -211,7 +211,7 @@ SET XACT_ABORT ON
 declare @Parents table ([Id] int,[ParentId] int,[Name] nvarchar(150));
 	
 insert into @Parents
-select * from fn_GetAllChilds (@structureId)
+select * from fn_GetAllChilds(@structureId)
 
 --*************************************************
 --Получаем периоды отчета
@@ -249,7 +249,7 @@ DROP TABLE #Ostatki
 select * into #Ostatki
 from (
 --остатки на конец
-	select
+	select	
 		cast(0 as bit) as IsNach
 		,ost.[Nom_NAME] as [ProductName]
 		,pg.[Name] as [GroupName]
@@ -265,11 +265,11 @@ from (
 		and VID = 'Общие'
 		and ost.[NOM_ID] not in (52) --Берем все кроме: 52-Вода
 		and ost.MVZ_ID in (select id from @Parents)
-	group by  ost.[Nom_NAME],pg.[Name],pc.[Name]
+	group by   ost.[Nom_NAME],pg.[Name],pc.[Name]
 
 --остатки на начало	
 	union all
-	select
+	select	
 		cast(1 as bit) as IsNach
 		,ost.[Nom_NAME] as [ProductName]
 		,pg.[Name] as [GroupName]
@@ -287,6 +287,7 @@ from (
 		and ost.MVZ_ID in (select id from @Parents)
 	group by   ost.[Nom_NAME],pg.[Name],pc.[Name]
 	) tmp
+
  
 --******************************************
 --Получаем движение по выбранному объекту
@@ -302,7 +303,10 @@ CREATE TABLE [dbo].[#Movement]
 	[CategoryName] [nvarchar](250) COLLATE Cyrillic_General_CI_AS NULL,
 	[Measured] [float] NULL,
 	[Reconciled] [float] NULL,
-	[IncludeInParentCeh] [BIT] NULL
+	[IncludeInParentCeh] [BIT] NULL,
+	BalanceBeginning [float] NULL
+	,BalanceEnd [float] NULL 
+
 )
 
 insert into #Movement
@@ -318,6 +322,8 @@ select * from (
 		,CAST(0 as int) as [Measured]
 		,sum(ioa.KOL) as [Reconciled]
 		,CAST(0 AS INT) AS [IncludeInParentCeh] 
+		,null as [BalanceBeginning]
+		,null as [BalanceEnd]
 	from dbo.[1CTcexInOut2Archive] ioa
 		left join #ProductsInCases p on p.Id = ioa.NOM_ID and p.CaseId = ioa.CaseId
 		left join [dbo].[ProductCategories] pc on pc.id = p.CategoryId
@@ -339,6 +345,8 @@ select * from (
 		,CAST(0 as int) as [Measured]
 		,sum(ioa.KOL) as [Reconciled]
 		,CAST(0 AS INT) AS [IncludeInParentCeh] 
+		,null as [BalanceBeginning]
+		,null as [BalanceEnd]
 	from dbo.[1CTcexInOut2Archive] ioa
 		left join #ProductsInCases p on p.Id = ioa.NOM_ID and p.CaseId = ioa.CaseId
 		left join [dbo].[ProductCategories] pc on pc.id = p.CategoryId
@@ -361,6 +369,8 @@ select * from (
 		,CAST(0 as int) as [Measured]
 		,sum(mx.KOL) as [Reconciled]
 		,CAST(0 AS INT) AS [IncludeInParentCeh] 
+		,null as [BalanceBeginning]
+		,null as [BalanceEnd]
 	from dbo.[1CMixing6Archive] mx
 		left join #ProductsInCases p on p.Id = mx.NOM_PROD_ID and p.CaseId = mx.CaseId
 		left join [dbo].[ProductCategories] pc on pc.id = p.CategoryId
@@ -381,6 +391,8 @@ select * from (
 		,CAST(0 as int) as [Measured]
 		,sum(mx.KOL) as [Reconciled]
 		,CAST(0 AS INT) AS [IncludeInParentCeh] 
+		,null as [BalanceBeginning]
+		,null as [BalanceEnd]
 	from dbo.[1CMixing6Archive] mx
 		left join #ProductsInCases p on p.Id = mx.NOM_KOMP_ID and p.CaseId = mx.CaseId
 		left join [dbo].[ProductCategories] pc on pc.id = p.CategoryId
@@ -401,7 +413,9 @@ select * from (
 		,pc.[Name] AS [CategoryName]
 		,CAST(0 as int) as [Measured]
 		,sum(um.KOL) as [Reconciled]
-		,CAST(1 AS INT) AS [IncludeInParentCeh] 
+		,CAST(1 AS INT) AS [IncludeInParentCeh]
+		,null as [BalanceBeginning]
+		,null as [BalanceEnd]
 	from dbo.[1CUnitsInOut1.1Archive] um
 		left join #ProductsInCases p on p.Id = um.NOM_ID and p.CaseId = um.CaseId
 		left join [dbo].[ProductCategories] pc on pc.id = p.CategoryId
@@ -424,6 +438,8 @@ select * from (
 		,CAST(0 as int) as [Measured]
 		,sum(um.KOL) as [Reconciled]
 		,CAST(1 AS INT) AS [IncludeInParentCeh] 
+		,null as [BalanceBeginning]
+		,null as [BalanceEnd]
 	from dbo.[1CUnitsInOut1.1Archive] um
 		left join #ProductsInCases p on p.Id = um.NOM_ID and p.CaseId = um.CaseId
 		left join [dbo].[ProductCategories] pc on pc.id = p.CategoryId
@@ -434,43 +450,39 @@ select * from (
 		and um.KOL<>0
 	group by um.MVZ_NAME,p.[Name],pg.[Name],pc.[Name]
 ) tmp
+--***************
 
-
-
-
-
-
---***********************************
---**Возвращаем данные отчета*********
-
---Часть таблиц возвращаю пустыми только что бы правильно отрабатывал построитель отчетов.
-----*******************************************************************************************
---DECLARE @links TABLE(SourceId int, DestId int, SourceType int, DestType int, SourceName nvarchar(100), DestName nvarchar(100), SourceParent nvarchar(50), DestParent nvarchar(50), SourceParentId int, DestParentId int, ProductName nvarchar(500), GroupName nvarchar(500), CategoryName nvarchar(500), Measured float, Reconciled FLOAT,OutOfBalanceTceh bit)
-
--------Вывод результатов-----
---SELECT * FROM @links      --0 --В текущей радакции всегда пустое (не совсем понимаю что должно быть)
---WHERE [OutOfBalanceTceh]=0
---SELECT * FROM @links      --1 --В текущей радакции всегда пустое (не совсем понимаю что должно быть)
---WHERE [OutOfBalanceTceh]=1
------------------------------
 
 --Формируем данные для datatable по потокам в балансе!!! --2
+
+--Переварициваем #Ostatki
+IF ( OBJECT_ID('tempdb..#PivotOstatki') IS NOT NULL)
+DROP TABLE #PivotOstatki
+
+select * into #PivotOstatki
+FROM (
+	SELECT ProductName, [1] AS BalanceBeginning, [0] AS BalanceEnd
+	FROM   
+	(select IsNach,ProductName,Value
+		from #Ostatki) p  
+	PIVOT  
+	(SUM (Value)  
+	FOR IsNach IN ( [1], [0] )  
+	) AS pvt
+) tmp
+
+
+
 select 	
-		
-		Type
-		,UnitName
+		UnitName
 		,CASE WHEN IsInput = 0 THEN 'Витрати' 
 		ELSE 'Прихiд'
 		END IsInput
 		,T1.ProductName
-		,GroupName
-		,CategoryName
-		,Measured
-		,Reconciled
-		,IncludeInParentCeh
-		 ,T3.ProductSortIndex
-		 ,T4.BalanceBeginning
-		 ,T4.BalanceEnd
+		, Reconciled
+		,T3.ProductSortIndex
+		,T1.BalanceBeginning
+		,T1.BalanceEnd
 
 		from #Movement as T1
 								left join  (SELECT    ISNULL((SELECT   dbo.Sorting.SortIndex
@@ -479,99 +491,17 @@ select
 															#ProductsInCaseEnd.Name as ProductName
 											FROM         #ProductsInCaseEnd) T3
 								on  (T1.ProductName = T3.ProductName)
-								left join (SELECT ProductName, [1] AS BalanceBeginning, [0] AS BalanceEnd
-											FROM   
-											(select IsNach,ProductName,Value
-											 from #Ostatki) p  
-											PIVOT  
-											(SUM (Value)  
-											FOR IsNach IN ( [1], [0] )  
-											) AS pvt ) T4
+								left  join #PivotOstatki T4
 								on (T1.ProductName = T4.ProductName)
+-- Добавляем начало и конец		
+UNION
+select '2' as UnitName, '2' as IsInput, ProductName,  Null as Reconciled, null as ProductSortIndex,  BalanceBeginning,  BalanceEnd from #PivotOstatki		
 
-
-
----------------------------
---Формируем данные для datatable по потокам вне баланса!!! --3
---select * from #Movement where 1=2 --В текущей радакции всегда пустое (не совсем понимаю что должно быть)
-
----------------------------
---Формируем данные для datatable по потокам в балансе!!! 4
---select IsNach,ProductName,GroupName,CategoryName,issystem,issystemcategory,Value
--- from #Ostatki
---order by [ProductName]
-
-
---SELECT ProductName, [1] AS IsNach_1, [0] AS IsNach_0
---FROM   
---(select IsNach,ProductName,Value
--- from #Ostatki) p  
---PIVOT  
---(SUM (Value)  
---FOR IsNach IN ( [1], [0] )  
---) AS pvt  
-
-
-
-
-
-
-
-
-
-
----------------------------
---Формируем данные для datatable по потокам в балансе!!! 5
---пустышка
---select * from #Ostatki 
---where 2=1 
---order by [ProductName]
-
---по неизвестному продукту --6
---select 0 ,0 ,0 ,0 ,0 where 2=1
-
--- сортировка по продуктам 9
---SELECT    ISNULL((SELECT     dbo.Sorting.SortIndex
---                              FROM         dbo.Sorting
---                              WHERE     (dbo.Sorting.ProductId = #ProductsInCaseEnd.Id) AND (dbo.Sorting.StructureId = @structureId)), #ProductsInCaseEnd.SortIndex) AS SortIndex,
---	#ProductsInCaseEnd.Name as ProductName
---FROM         #ProductsInCaseEnd
-
----- сортировка по установкам 10
---SELECT    	 ISNULL
---                          ((SELECT     dbo.ObjectSorting.SortIndex
---                              FROM         dbo.ObjectSorting
---                              WHERE     (dbo.ObjectSorting.ObjectId = dbo.Objects.Id) AND (dbo.ObjectSorting.StructureId =  @structureId)), 65565) AS SortIndex,
---	dbo.fn_GetName(dbo.Objects.Id, @CaseIdEnd) as ObjectName
---FROM  dbo.Objects
---WHERE dbo.Objects.ParentId in (select id from @Parents) and
---((dbo.Objects.ObjectTypeId = 8) OR (dbo.Objects.ObjectTypeId = 256)) 
-----AND ((dbo.Objects.ParentId=@structureId) OR (dbo.fn_IsInStructure(dbo.Objects.ParentId, @structureId)=1))
-
-----11
---select count(*) from objects where parentid in (select id from @Parents) and objecttypeid=8
-
-----12
-----пустышка
---select 0
-
-----13
----- Топливо
---select 
---	tpl.MVZ_NAME
---	,tpl.NOM_KOD as [ProductCode]
---	,tpl.NOM_NAME as [ProductName]
---	,dbo.fn_GetParentId(tpl.MVZ_ID) as [StructureId]
---	,tpl.KOL
---	,tpl.CaseId
---from dbo.[1CToplivo5Archive] tpl
---where tpl.CaseId in (select id from #Cases)
---	and tpl.MVZ_ID in (select id from @Parents) 
 
 drop table #Movement
 drop table #Ostatki
 drop table #Cases
-
+DROP TABLE #PivotOstatki
 drop table #ProductsInCaseEnd
 
 
