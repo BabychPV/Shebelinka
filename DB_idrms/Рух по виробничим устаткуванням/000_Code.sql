@@ -80,7 +80,7 @@ insert into @prev (id)
 select id from @ProductionId
 if (select top (1) ParentId from dbo.Objects where Id in (select id from @ProductionId) and ParentId is null) is not null
 begin
-insert  into @table values(null,null,'Tёх')
+insert  into @table values(null,null,'T??')
 end
 insert into @table select Id,ParentId,Name from Objects where (Id in (select id from @ProductionId))
 table_loop:
@@ -207,14 +207,14 @@ SET XACT_ABORT ON
 
 
 --*************************************************
---Родители для выборки
+--???????? ??? ???????
 declare @Parents table ([Id] int,[ParentId] int,[Name] nvarchar(150));
 	
 insert into @Parents
 select * from fn_GetAllChilds(@structureId)
 
 --*************************************************
---Получаем периоды отчета
+--???????? ??????? ??????
 IF ( OBJECT_ID('tempdb..#Cases') IS NOT NULL)
 DROP TABLE #Cases
 select * into #Cases 
@@ -235,20 +235,20 @@ SELECT *
 INTO #ProductsInCaseEnd
 FROM dbo.fn_GetProductsInCase(@caseIdEnd)
 
--- Получаем список материалов, доступных в данном периодах
+-- ???????? ?????? ??????????, ????????? ? ?????? ????????
 IF ( OBJECT_ID('tempdb..#ProductsInCases') IS NOT NULL)
 DROP TABLE #ProductsInCases
 SELECT *
 INTO #ProductsInCases
 FROM dbo.fn_GetProductsInIntervalCases(@caseIdBeg,@caseIdEnd)
 --*************************************************
---Получаем общие остатки на начало и конец периода
+--???????? ????? ??????? ?? ?????? ? ????? ???????
 IF ( OBJECT_ID('tempdb..#Ostatki') IS NOT NULL)
 DROP TABLE #Ostatki
 
 select * into #Ostatki
 from (
---остатки на конец
+--??????? ?? ?????
 	select	
 		cast(0 as bit) as IsNach
 		,ost.[Nom_NAME] as [ProductName]
@@ -261,13 +261,13 @@ from (
 		left join #ProductsInCaseEnd p on p.Id = ost.NOM_ID
 		left join [dbo].[ProductCategories] pc on pc.id = p.CategoryId
 		left join [dbo].[ProductGroups] pg on pg.Id = p.GroupId
-	where ost.caseid = @caseIdEnd     --остатки на конец
-		and VID = 'Общие'
-		and ost.[NOM_ID] not in (52) --Берем все кроме: 52-Вода
+	where ost.caseid = @caseIdEnd     --??????? ?? ?????
+		and VID = '?????'
+		and ost.[NOM_ID] not in (52) --????? ??? ?????: 52-????
 		and ost.MVZ_ID in (select id from @Parents)
 	group by   ost.[Nom_NAME],pg.[Name],pc.[Name]
 
---остатки на начало	
+--??????? ?? ??????	
 	union all
 	select	
 		cast(1 as bit) as IsNach
@@ -281,16 +281,16 @@ from (
 		left join #ProductsInCaseEnd p on p.Id = ost.NOM_ID
 		left join [dbo].[ProductCategories] pc on pc.id = p.CategoryId
 		left join [dbo].[ProductGroups] pg on pg.Id = p.GroupId
-	where ost.caseid =( select PrevCaseId from #Cases where id =  @caseIdBeg)--остатки на начало
-		and VID = 'Общие'
-		and ost.[NOM_ID] not in (52) --Берем все кроме: 52-Вода
+	where ost.caseid =( select PrevCaseId from #Cases where id =  @caseIdBeg)--??????? ?? ??????
+		and VID = '?????'
+		and ost.[NOM_ID] not in (52) --????? ??? ?????: 52-????
 		and ost.MVZ_ID in (select id from @Parents)
 	group by   ost.[Nom_NAME],pg.[Name],pc.[Name]
 	) tmp
 
  
 --******************************************
---Получаем движение по выбранному объекту
+--???????? ???????? ?? ?????????? ???????
 IF ( OBJECT_ID('tempdb..#Movement') IS NOT NULL)
 DROP TABLE #Movement
 CREATE TABLE [dbo].[#Movement]
@@ -311,7 +311,7 @@ CREATE TABLE [dbo].[#Movement]
 
 insert into #Movement
 select * from (
-	--Приход
+	--??????
 	select 
 		CAST(10 as int) as [Type]
 		,ioa.MVZ_IST_NAME as UnitName
@@ -333,7 +333,7 @@ select * from (
 		and MVZ_IST_ID not in (select id  from @Parents)
 		and ioa.KOL<>0
 	group by ioa.MVZ_IST_NAME,p.[Name],pc.[Name],pg.[Name]
-	--Расход
+	--??????
 	union all
 	select 
 		CAST(15 as int) as [Type]
@@ -357,11 +357,11 @@ select * from (
 		and ioa.KOL<>0
 	group by ioa.MVZ_PRIEM_NAME,p.[Name],pc.[Name],pg.[Name]
 
-	--Из смешения
+	--?? ????????
 	union all
 	select 
 		CAST(35 as int) as [Type]
-		,'З змішування' as [UnitName]
+		,'? ?????????' as [UnitName]
 		,CAST(1 as bit) AS [IsInput]
 		,p.[Name] AS [ProductName]
 		,pg.[Name] AS [GroupName]
@@ -379,11 +379,11 @@ select * from (
 		and mx.MVZ_ID in (select id  from @Parents)
 	group by mx.NOM_PROD_NAME,p.[Name],pc.[Name],pg.[Name]
 
-	--В смешение
+	--? ????????
 	union all
 	select 
 		CAST(35 as int) as [Type]
-		,'В змішання' as [UnitName]
+		,'? ???????' as [UnitName]
 		,CAST(0 as bit) AS [IsInput]
 		,p.[Name] AS [ProductName]
 		,pg.[Name] AS [GroupName]
@@ -402,7 +402,7 @@ select * from (
 	group by mx.NOM_KOMP_NAME,p.[Name],pc.[Name],pg.[Name]
 
 
-	--Получено на установках выбранного производства
+	--???????? ?? ?????????? ?????????? ????????????
 	union all
 	select 
 		CAST(20 as int) as [Type]
@@ -426,7 +426,7 @@ select * from (
 		and um.KOL<>0
 	group by um.MVZ_NAME,p.[Name],pg.[Name],pc.[Name]
 	
-	--Потреблено установками выбранного производства
+	--?????????? ??????????? ?????????? ????????????
 	union all
 	select 
 		CAST(20 as int) as [Type]
@@ -453,9 +453,9 @@ select * from (
 --***************
 
 
---Формируем данные для datatable по потокам в балансе!!! --2
+--????????? ?????? ??? datatable ?? ??????? ? ???????!!! --2
 
---Переварициваем #Ostatki
+--?????????????? #Ostatki
 IF ( OBJECT_ID('tempdb..#PivotOstatki') IS NOT NULL)
 DROP TABLE #PivotOstatki
 
@@ -475,8 +475,8 @@ FROM (
 
 select 	
 		UnitName
-		,CASE WHEN IsInput = 0 THEN 'Витрати' 
-		ELSE 'Прихiд'
+		,CASE WHEN IsInput = 0 THEN '???????' 
+		ELSE '????i?'
 		END IsInput
 		,T1.ProductName
 		, Reconciled
@@ -493,7 +493,7 @@ select
 								on  (T1.ProductName = T3.ProductName)
 								left  join #PivotOstatki T4
 								on (T1.ProductName = T4.ProductName)
--- Добавляем начало и конец		
+-- ????????? ?????? ? ?????		
 UNION
 select '2' as UnitName, '2' as IsInput, ProductName,  Null as Reconciled, null as ProductSortIndex,  BalanceBeginning,  BalanceEnd from #PivotOstatki		
 
@@ -535,14 +535,14 @@ SET XACT_ABORT ON
 
 
 --*************************************************
---Родители для выборки
+--???????? ??? ???????
 declare @Parents table ([Id] int,[ParentId] int,[Name] nvarchar(150));
 	
 insert into @Parents
 select * from fn_GetAllChilds_Test_01 (@structureId)
 
 --*************************************************
---Получаем периоды отчета
+--???????? ??????? ??????
 IF ( OBJECT_ID('tempdb..#Cases') IS NOT NULL)
 DROP TABLE #Cases
 select * into #Cases 
@@ -563,20 +563,20 @@ SELECT *
 INTO #ProductsInCaseEnd
 FROM dbo.fn_GetProductsInCase(@caseIdEnd)
 
--- Получаем список материалов, доступных в данном периодах
+-- ???????? ?????? ??????????, ????????? ? ?????? ????????
 IF ( OBJECT_ID('tempdb..#ProductsInCases') IS NOT NULL)
 DROP TABLE #ProductsInCases
 SELECT *
 INTO #ProductsInCases
 FROM dbo.fn_GetProductsInIntervalCases(@caseIdBeg,@caseIdEnd)
 --*************************************************
---Получаем общие остатки на начало и конец периода
+--???????? ????? ??????? ?? ?????? ? ????? ???????
 IF ( OBJECT_ID('tempdb..#Ostatki') IS NOT NULL)
 DROP TABLE #Ostatki
 
 select * into #Ostatki
 from (
---остатки на конец
+--??????? ?? ?????
 	select
 		par.id
 		,par.ParentId
@@ -592,13 +592,13 @@ from (
 		left join [dbo].[ProductCategories] pc on pc.id = p.CategoryId
 		left join [dbo].[ProductGroups] pg on pg.Id = p.GroupId
 		left join  @Parents par on par.id=ost.MVZ_ID 
-	where ost.caseid = @caseIdEnd     --остатки на конец
-		and VID = 'Общие'
-		and ost.[NOM_ID] not in (52) --Берем все кроме: 52-Вода
+	where ost.caseid = @caseIdEnd     --??????? ?? ?????
+		and VID = '?????'
+		and ost.[NOM_ID] not in (52) --????? ??? ?????: 52-????
 		and ost.MVZ_ID in (select id from @Parents)
 	group by par.id,par.ParentId, ost.[Nom_NAME],pg.[Name],pc.[Name]
 
---остатки на начало	
+--??????? ?? ??????	
 	union all
 	select
 		par.id
@@ -615,15 +615,15 @@ from (
 		left join [dbo].[ProductCategories] pc on pc.id = p.CategoryId
 		left join [dbo].[ProductGroups] pg on pg.Id = p.GroupId
 		left join  @Parents par on par.id=ost.MVZ_ID
-	where ost.caseid =( select PrevCaseId from #Cases where id =  @caseIdBeg)--остатки на начало
-		and VID = 'Общие'
-		and ost.[NOM_ID] not in (52) --Берем все кроме: 52-Вода
+	where ost.caseid =( select PrevCaseId from #Cases where id =  @caseIdBeg)--??????? ?? ??????
+		and VID = '?????'
+		and ost.[NOM_ID] not in (52) --????? ??? ?????: 52-????
 		and ost.MVZ_ID in (select id from @Parents)
 	group by  par.id,par.ParentId, ost.[Nom_NAME], pg.[Name], pc.[Name]
 	) tmp
  
 --******************************************
---Получаем движение по выбранному объекту
+--???????? ???????? ?? ?????????? ???????
 IF ( OBJECT_ID('tempdb..#Movement') IS NOT NULL)
 DROP TABLE #Movement
 CREATE TABLE [dbo].[#Movement]
@@ -643,7 +643,7 @@ CREATE TABLE [dbo].[#Movement]
 
 insert into #Movement
 select * from (
-	--Приход
+	--??????
 	select 
 		par.ParentId
 		,par.id
@@ -666,7 +666,7 @@ select * from (
 		and MVZ_IST_ID not in (select id  from @Parents)
 		and ioa.KOL<>0
 	group by par.id, par.ParentId, ioa.MVZ_IST_NAME ,p.[Name],pc.[Name],pg.[Name]
-	--Расход
+	--??????
 	union all
 	select 
 		par.ParentId
@@ -691,13 +691,13 @@ select * from (
 		and ioa.KOL<>0
 	group by par.id, par.ParentId, ioa.MVZ_PRIEM_NAME,p.[Name],pc.[Name],pg.[Name]
 
-	--Из смешения
+	--?? ????????
 	union all
 	select 
 		par.ParentId
 		,par.id
 		,CAST(35 as int) as [Type]
-		,'З змішування' as [UnitName]
+		,'? ?????????' as [UnitName]
 		,CAST(1 as bit) AS [IsInput]
 		,p.[Name] AS [ProductName]
 		,pg.[Name] AS [GroupName]
@@ -714,13 +714,13 @@ select * from (
 		and mx.MVZ_ID in (select id  from @Parents)
 	group by par.id, par.ParentId, mx.NOM_PROD_NAME,p.[Name],pc.[Name],pg.[Name]
 
-	--В смешение
+	--? ????????
 	union all
 	select 
 		par.ParentId
 		,par.id
 		,CAST(35 as int) as [Type]
-		,'В змішання' as [UnitName]
+		,'? ???????' as [UnitName]
 		,CAST(0 as bit) AS [IsInput]
 		,p.[Name] AS [ProductName]
 		,pg.[Name] AS [GroupName]
@@ -738,7 +738,7 @@ select * from (
 	group by par.id, par.ParentId, mx.NOM_KOMP_NAME,p.[Name],pc.[Name],pg.[Name]
 
 
-	--Получено на установках выбранного производства
+	--???????? ?? ?????????? ?????????? ????????????
 	union all
 	select 
 		par.ParentId
@@ -763,7 +763,7 @@ select * from (
 		and um.KOL<>0
 	group by par.id, par.ParentId,um.MVZ_NAME,p.[Name],pg.[Name],pc.[Name]
 	
-	--Потреблено установками выбранного производства
+	--?????????? ??????????? ?????????? ????????????
 	union all
 	select 
 		par.ParentId
@@ -795,27 +795,27 @@ select * from (
 
 
 --***********************************
---**Возвращаем данные отчета*********
+--**?????????? ?????? ??????*********
 
---Часть таблиц возвращаю пустыми только что бы правильно отрабатывал построитель отчетов.
+--????? ?????? ????????? ??????? ?????? ??? ?? ????????? ??????????? ??????????? ???????.
 ----*******************************************************************************************
 --DECLARE @links TABLE(SourceId int, DestId int, SourceType int, DestType int, SourceName nvarchar(100), DestName nvarchar(100), SourceParent nvarchar(50), DestParent nvarchar(50), SourceParentId int, DestParentId int, ProductName nvarchar(500), GroupName nvarchar(500), CategoryName nvarchar(500), Measured float, Reconciled FLOAT,OutOfBalanceTceh bit)
 
--------Вывод результатов-----
---SELECT * FROM @links      --0 --В текущей радакции всегда пустое (не совсем понимаю что должно быть)
+-------????? ???????????-----
+--SELECT * FROM @links      --0 --? ??????? ???????? ?????? ?????? (?? ?????? ??????? ??? ?????? ????)
 --WHERE [OutOfBalanceTceh]=0
---SELECT * FROM @links      --1 --В текущей радакции всегда пустое (не совсем понимаю что должно быть)
+--SELECT * FROM @links      --1 --? ??????? ???????? ?????? ?????? (?? ?????? ??????? ??? ?????? ????)
 --WHERE [OutOfBalanceTceh]=1
 -----------------------------
 
---Формируем данные для datatable по потокам в балансе!!! --2
+--????????? ?????? ??? datatable ?? ??????? ? ???????!!! --2
 select 	
 		ParentId
 		,UnitId
 		,Type
 		,UnitName
-		,CASE WHEN IsInput = 0 THEN 'Витрати' 
-		ELSE 'Прихiд'
+		,CASE WHEN IsInput = 0 THEN '???????' 
+		ELSE '????i?'
 		END IsInput
 		,T1.ProductName
 		,GroupName
@@ -852,11 +852,11 @@ select
 								--		FROM  #ProductsInCaseEnd) T3
 								--on (T2.ParentId = T3.Structureid) and (T1.ProductName = T3.ProductName)
 ---------------------------
---Формируем данные для datatable по потокам вне баланса!!! --3
---select * from #Movement where 1=2 --В текущей радакции всегда пустое (не совсем понимаю что должно быть)
+--????????? ?????? ??? datatable ?? ??????? ??? ???????!!! --3
+--select * from #Movement where 1=2 --? ??????? ???????? ?????? ?????? (?? ?????? ??????? ??? ?????? ????)
 
 ---------------------------
---Формируем данные для datatable по потокам в балансе!!! 4
+--????????? ?????? ??? datatable ?? ??????? ? ???????!!! 4
 --select IsNach,ProductName,GroupName,CategoryName,issystem,issystemcategory,Value
 -- from #Ostatki
 --order by [ProductName]
@@ -881,23 +881,23 @@ select
 
 
 ---------------------------
---Формируем данные для datatable по потокам в балансе!!! 5
---пустышка
+--????????? ?????? ??? datatable ?? ??????? ? ???????!!! 5
+--????????
 --select * from #Ostatki 
 --where 2=1 
 --order by [ProductName]
 
---по неизвестному продукту --6
+--?? ???????????? ???????? --6
 --select 0 ,0 ,0 ,0 ,0 where 2=1
 
--- сортировка по продуктам 9
+-- ?????????? ?? ????????? 9
 --SELECT    ISNULL((SELECT     dbo.Sorting.SortIndex
 --                              FROM         dbo.Sorting
 --                              WHERE     (dbo.Sorting.ProductId = #ProductsInCaseEnd.Id) AND (dbo.Sorting.StructureId = @structureId)), #ProductsInCaseEnd.SortIndex) AS SortIndex,
 --	#ProductsInCaseEnd.Name as ProductName
 --FROM         #ProductsInCaseEnd
 
----- сортировка по установкам 10
+---- ?????????? ?? ?????????? 10
 --SELECT    	 ISNULL
 --                          ((SELECT     dbo.ObjectSorting.SortIndex
 --                              FROM         dbo.ObjectSorting
@@ -912,11 +912,11 @@ select
 --select count(*) from objects where parentid in (select id from @Parents) and objecttypeid=8
 
 ----12
-----пустышка
+----????????
 --select 0
 
 ----13
----- Топливо
+---- ???????
 --select 
 --	tpl.MVZ_NAME
 --	,tpl.NOM_KOD as [ProductCode]
@@ -1101,69 +1101,69 @@ ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[1CUnitsInOut1Archive] CHECK CONSTRAINT [FK_1CUnitsInOut1Archive_Cases]
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Код' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CLosses3Archive', @level2type=N'COLUMN',@level2name=N'MVZ_KOD'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'???' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CLosses3Archive', @level2type=N'COLUMN',@level2name=N'MVZ_KOD'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Наименование' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CLosses3Archive', @level2type=N'COLUMN',@level2name=N'MVZ_NAME'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'????????????' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CLosses3Archive', @level2type=N'COLUMN',@level2name=N'MVZ_NAME'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Код номенклатуры' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CLosses3Archive', @level2type=N'COLUMN',@level2name=N'NOM_KOD'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'??? ????????????' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CLosses3Archive', @level2type=N'COLUMN',@level2name=N'NOM_KOD'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Наименование номенклатуры' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CLosses3Archive', @level2type=N'COLUMN',@level2name=N'NOM_NAME'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'???????????? ????????????' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CLosses3Archive', @level2type=N'COLUMN',@level2name=N'NOM_NAME'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Количество' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CLosses3Archive', @level2type=N'COLUMN',@level2name=N'KOL'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'??????????' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CLosses3Archive', @level2type=N'COLUMN',@level2name=N'KOL'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Идентификатор периода' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CLosses3Archive', @level2type=N'COLUMN',@level2name=N'CaseId'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'????????????? ???????' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CLosses3Archive', @level2type=N'COLUMN',@level2name=N'CaseId'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Код' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CMixing6Archive', @level2type=N'COLUMN',@level2name=N'MVZ_KOD'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'???' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CMixing6Archive', @level2type=N'COLUMN',@level2name=N'MVZ_KOD'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Наименование' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CMixing6Archive', @level2type=N'COLUMN',@level2name=N'MVZ_NAME'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'????????????' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CMixing6Archive', @level2type=N'COLUMN',@level2name=N'MVZ_NAME'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Тип' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CMixing6Archive', @level2type=N'COLUMN',@level2name=N'TYP'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'???' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CMixing6Archive', @level2type=N'COLUMN',@level2name=N'TYP'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Количество' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CMixing6Archive', @level2type=N'COLUMN',@level2name=N'KOL'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'??????????' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CMixing6Archive', @level2type=N'COLUMN',@level2name=N'KOL'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Идентификатор периода' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CMixing6Archive', @level2type=N'COLUMN',@level2name=N'CaseId'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'????????????? ???????' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CMixing6Archive', @level2type=N'COLUMN',@level2name=N'CaseId'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Код номенклатуры' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1COstatki4Archive', @level2type=N'COLUMN',@level2name=N'NOM_KOD'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'??? ????????????' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1COstatki4Archive', @level2type=N'COLUMN',@level2name=N'NOM_KOD'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Наименование номенклатуры' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1COstatki4Archive', @level2type=N'COLUMN',@level2name=N'NOM_NAME'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'???????????? ????????????' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1COstatki4Archive', @level2type=N'COLUMN',@level2name=N'NOM_NAME'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Количество' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1COstatki4Archive', @level2type=N'COLUMN',@level2name=N'KOL'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'??????????' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1COstatki4Archive', @level2type=N'COLUMN',@level2name=N'KOL'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Идентификатор периода' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1COstatki4Archive', @level2type=N'COLUMN',@level2name=N'CaseId'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'????????????? ???????' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1COstatki4Archive', @level2type=N'COLUMN',@level2name=N'CaseId'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Код номенклатуры' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CTcexInOut2Archive', @level2type=N'COLUMN',@level2name=N'NOM_KOD'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'??? ????????????' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CTcexInOut2Archive', @level2type=N'COLUMN',@level2name=N'NOM_KOD'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Наименование номенклатуры' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CTcexInOut2Archive', @level2type=N'COLUMN',@level2name=N'NOM_NAME'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'???????????? ????????????' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CTcexInOut2Archive', @level2type=N'COLUMN',@level2name=N'NOM_NAME'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Количество' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CTcexInOut2Archive', @level2type=N'COLUMN',@level2name=N'KOL'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'??????????' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CTcexInOut2Archive', @level2type=N'COLUMN',@level2name=N'KOL'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Идентификатор периода' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CTcexInOut2Archive', @level2type=N'COLUMN',@level2name=N'CaseId'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'????????????? ???????' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CTcexInOut2Archive', @level2type=N'COLUMN',@level2name=N'CaseId'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Код номенклатуры' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CToplivo5Archive', @level2type=N'COLUMN',@level2name=N'NOM_KOD'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'??? ????????????' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CToplivo5Archive', @level2type=N'COLUMN',@level2name=N'NOM_KOD'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Наименование номенклатуры' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CToplivo5Archive', @level2type=N'COLUMN',@level2name=N'NOM_NAME'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'???????????? ????????????' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CToplivo5Archive', @level2type=N'COLUMN',@level2name=N'NOM_NAME'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Количество' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CToplivo5Archive', @level2type=N'COLUMN',@level2name=N'KOL'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'??????????' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CToplivo5Archive', @level2type=N'COLUMN',@level2name=N'KOL'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Идентификатор периода' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CToplivo5Archive', @level2type=N'COLUMN',@level2name=N'CaseId'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'????????????? ???????' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CToplivo5Archive', @level2type=N'COLUMN',@level2name=N'CaseId'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Код номенклатуры' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CUnitsInOut1.1Archive', @level2type=N'COLUMN',@level2name=N'NOM_KOD'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'??? ????????????' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CUnitsInOut1.1Archive', @level2type=N'COLUMN',@level2name=N'NOM_KOD'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Наименование номенклатуры' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CUnitsInOut1.1Archive', @level2type=N'COLUMN',@level2name=N'NOM_NAME'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'???????????? ????????????' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CUnitsInOut1.1Archive', @level2type=N'COLUMN',@level2name=N'NOM_NAME'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Количество' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CUnitsInOut1.1Archive', @level2type=N'COLUMN',@level2name=N'KOL'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'??????????' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CUnitsInOut1.1Archive', @level2type=N'COLUMN',@level2name=N'KOL'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Идентификатор периода' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CUnitsInOut1.1Archive', @level2type=N'COLUMN',@level2name=N'CaseId'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'????????????? ???????' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CUnitsInOut1.1Archive', @level2type=N'COLUMN',@level2name=N'CaseId'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Код номенклатуры' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CUnitsInOut1Archive', @level2type=N'COLUMN',@level2name=N'NOM_KOD'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'??? ????????????' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CUnitsInOut1Archive', @level2type=N'COLUMN',@level2name=N'NOM_KOD'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Наименование номенклатуры' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CUnitsInOut1Archive', @level2type=N'COLUMN',@level2name=N'NOM_NAME'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'???????????? ????????????' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CUnitsInOut1Archive', @level2type=N'COLUMN',@level2name=N'NOM_NAME'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Потребленное количество' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CUnitsInOut1Archive', @level2type=N'COLUMN',@level2name=N'KOL_POTREB'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'???????????? ??????????' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CUnitsInOut1Archive', @level2type=N'COLUMN',@level2name=N'KOL_POTREB'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Количество выработки' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CUnitsInOut1Archive', @level2type=N'COLUMN',@level2name=N'KOL_VIRAB'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'?????????? ?????????' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CUnitsInOut1Archive', @level2type=N'COLUMN',@level2name=N'KOL_VIRAB'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Идентификатор периода' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CUnitsInOut1Archive', @level2type=N'COLUMN',@level2name=N'CaseId'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'????????????? ???????' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'1CUnitsInOut1Archive', @level2type=N'COLUMN',@level2name=N'CaseId'
 GO
 
 

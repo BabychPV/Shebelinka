@@ -16,6 +16,9 @@
           <QueryParameter Name="@Date">
             <Value>=Parameters!Date.Value</Value>
           </QueryParameter>
+          <QueryParameter Name="@Unit">
+            <Value>Бітумна установка</Value>
+          </QueryParameter>
         </QueryParameters>
         <CommandType>StoredProcedure</CommandType>
         <CommandText>AF_GetReportData_Balance_oms</CommandText>
@@ -1419,7 +1422,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Баланс установки"ГФУ1"</Value>
+                    <Value>Баланс установки "Бітумка"</Value>
                     <Style>
                       <FontSize>24pt</FontSize>
                       <FontWeight>Bold</FontWeight>
@@ -1548,7 +1551,7 @@
       <NumberOfRows>1</NumberOfRows>
       <CellDefinitions>
         <CellDefinition>
-          <ColumnIndex>3</ColumnIndex>
+          <ColumnIndex>0</ColumnIndex>
           <RowIndex>0</RowIndex>
           <ParameterName>Date</ParameterName>
         </CellDefinition>

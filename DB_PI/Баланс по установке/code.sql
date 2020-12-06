@@ -55,11 +55,9 @@ GO
 
 
 
-
-
 USE [PI_Temp]
 GO
-/****** Object:  StoredProcedure [dbo].[AF_GetReportData_Balance_oms]    Script Date: 23.11.2020 9:35:45 ******/
+/****** Object:  StoredProcedure [dbo].[AF_GetReportData_Balance_oms]    Script Date: 06.12.2020 17:36:46 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -68,11 +66,12 @@ GO
 -- =============================================
 -- Author:		Babych P.V
 -- Create date: 2020-11-13
--- Last modify: 2020-11-24
+-- Last modify: 2020-12-06
 -- Description:	Get Element PI AF
 -- =============================================
-alter PROCEDURE [dbo].[AF_GetReportData_Balance_oms]
-	@Date nvarchar(24) = '2020-10-26 23:59:59'
+ALTER PROCEDURE [dbo].[AF_GetReportData_Balance_oms]
+	@Date nvarchar(24) = '2020-10-26 23:59:59',
+	@Unit nvarchar(30) = 'ГФУ-1'
 AS
 BEGIN
 
@@ -164,10 +163,11 @@ SET @OPENQUERY = N'SELECT * FROM OPENQUERY('+ @LinkedServer + ','''
 
 	SET @TSQL = N'SELECT el.Name Element, ea.Name Attribute, ea.Description Pos,cat.name IsInput, s.ValueStr as Total, s1.ValueStr as Average, s2.ValueStr as Total6_18, s3.ValueStr as Total18_6,
 				(SELECT  s0.ValueStr
-					FROM  ШВПГКН.Asset.ElementAttribute ea1
+					FROM  [ШВПГКН].[Asset].[Element] el1
+					INNER JOIN ШВПГКН.Asset.ElementAttribute ea1 ON ea1.ElementID = el1.ID
 					INNER JOIN ШВПГКН.Data.Snapshot s0 ON s0.ElementAttributeID = ea1.ID
-					WHERE ea1.Name = ea.Name +  '''', %'''') Percent
-				FROM (SELECT ID,name FROM [ШВПГКН].[Asset].[Element] WHERE Name =''''ГФУ1'''') el
+					WHERE el1.Name = '''''+@Unit+''''' and ea1.Name = ea.Name +  '''', %'''') Percent
+				FROM (SELECT ID,name FROM [ШВПГКН].[Asset].[Element] WHERE Name ='''''+@Unit+''''') el
 				INNER JOIN ШВПГКН.Asset.ElementAttribute ea ON ea.ElementID = el.ID
 				INNER JOIN ШВПГКН.Asset.ElementAttributeCategory eac ON eac.ElementAttributeID = ea.ID
 				INNER JOIN [ШВПГКН].[Asset].[Category] cat ON (eac.CategoryID = cat.ID and cat.Name in (''''Input'''',''''Output''''))
@@ -206,3 +206,4 @@ INSERT INTO [dbo].[LogRunQuery]([Query])
 	DROP TABLE #GetBalanceTemp
 
 END
+
