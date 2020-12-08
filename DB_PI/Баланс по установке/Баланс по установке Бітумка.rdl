@@ -56,6 +56,10 @@
           <DataField>Total18_6</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
+        <Field Name="Total6_6">
+          <DataField>Total6_6</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
         <Field Name="Percent">
           <DataField>Percent</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
@@ -741,14 +745,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox15">
+                        <Textbox Name="Total6_6">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=CDec(ReportItems!Total6_18.Value) + CDec(ReportItems!Total18_6.Value)</Value>
+                                  <Value>=Fields!Total6_6.Value</Value>
                                   <Style>
                                     <Format>0.000;(0.000)</Format>
                                   </Style>
@@ -759,7 +763,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox15</rd:DefaultName>
+                          <rd:DefaultName>Total6_6</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -1134,8 +1138,9 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value />
+                                  <Value>=Sum(Fields!Total6_6.Value)</Value>
                                   <Style>
+                                    <FontWeight>Bold</FontWeight>
                                     <Format>0.000;(0.000)</Format>
                                   </Style>
                                 </TextRun>
