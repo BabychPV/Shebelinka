@@ -1,0 +1,8 @@
+E:\APPS\PIPC (x86)\ACE\ClassLibraries\TankCalcs\bin\Debug\TankCalcs.dll
+E:\APPS\PIPC (x86)\ACE\ClassLibraries\TankCalcs\bin\Debug\TankCalcs.pdb
+E:\APPS\PIPC (x86)\ACE\ClassLibraries\TankCalcs\bin\Debug\TankCalcs.xml
+E:\APPS\PIPC (x86)\ACE\ClassLibraries\TankCalcs\bin\Debug\ICalc-Main.dll
+E:\APPS\PIPC (x86)\ACE\ClassLibraries\TankCalcs\obj\Debug\TankCalcs.dll
+E:\APPS\PIPC (x86)\ACE\ClassLibraries\TankCalcs\obj\Debug\TankCalcs.xml
+E:\APPS\PIPC (x86)\ACE\ClassLibraries\TankCalcs\obj\Debug\TankCalcs.pdb
+E:\APPS\PIPC (x86)\ACE\ClassLibraries\TankCalcs\obj\Debug\TankCalcs.vbprojResolveAssemblyReference.cache

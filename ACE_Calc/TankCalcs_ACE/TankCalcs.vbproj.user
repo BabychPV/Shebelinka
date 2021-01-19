@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <StartAction>Program</StartAction>
+    <StartProgram>E:\APPS\PIPC %28x86%29\ACE\Scheduler\x86\PIACEClassLibraryHost.exe</StartProgram>
+    <StartArguments>pi TankCalcs LD15TToVM "\\pi\%25Indusoft\I-OMS\Objects\Резервуар №007"</StartArguments>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ProjectView>ShowAllFiles</ProjectView>
+    <PublishUrlHistory />
+    <InstallUrlHistory />
+    <SupportUrlHistory />
+    <UpdateUrlHistory />
+    <BootstrapperUrlHistory />
+    <ErrorReportUrlHistory />
+    <FallbackCulture>en-US</FallbackCulture>
+    <VerifyUploadedFiles>false</VerifyUploadedFiles>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ReferencePath>E:\APPS\PIPC (x86)\ACE\ClassLibraries\TankCalcs\bin\Common\</ReferencePath>
+  </PropertyGroup>
+</Project>

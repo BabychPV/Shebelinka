@@ -1,0 +1,9 @@
+C:\Users\UPG01SV-PI1S\Desktop\Не закінченні завдання\Indusoft.I-OMS Client.Calculators\SH_Project\Dest15\bin\Release\Indusoft.I-OMS Client.Calculators.API.LD15TToVM.dll
+C:\Users\UPG01SV-PI1S\Desktop\Не закінченні завдання\Indusoft.I-OMS Client.Calculators\SH_Project\Dest15\bin\Release\Indusoft.I-OMS Client.Calculators.API.LD15TToVM.pdb
+C:\Users\UPG01SV-PI1S\Desktop\Не закінченні завдання\Indusoft.I-OMS Client.Calculators\SH_Project\Dest15\bin\Release\Indusoft.I-OMS Client.Calculators.API.LD15TToVM.xml
+C:\Users\UPG01SV-PI1S\Desktop\Не закінченні завдання\Indusoft.I-OMS Client.Calculators\SH_Project\Dest15\bin\Release\Indusoft.OMSClient.CommonClasses.dll
+C:\Users\UPG01SV-PI1S\Desktop\Не закінченні завдання\Indusoft.I-OMS Client.Calculators\SH_Project\Dest15\obj\Release\Indusoft.I_OMS_Client.Calculators.API.LD15TToVM.Resources.resources
+C:\Users\UPG01SV-PI1S\Desktop\Не закінченні завдання\Indusoft.I-OMS Client.Calculators\SH_Project\Dest15\obj\Release\Indusoft.I-OMS Client.Calculators.API.LD15TToVM.vbproj.GenerateResource.Cache
+C:\Users\UPG01SV-PI1S\Desktop\Не закінченні завдання\Indusoft.I-OMS Client.Calculators\SH_Project\Dest15\obj\Release\Indusoft.I-OMS Client.Calculators.API.LD15TToVM.dll
+C:\Users\UPG01SV-PI1S\Desktop\Не закінченні завдання\Indusoft.I-OMS Client.Calculators\SH_Project\Dest15\obj\Release\Indusoft.I-OMS Client.Calculators.API.LD15TToVM.xml
+C:\Users\UPG01SV-PI1S\Desktop\Не закінченні завдання\Indusoft.I-OMS Client.Calculators\SH_Project\Dest15\obj\Release\Indusoft.I-OMS Client.Calculators.API.LD15TToVM.pdb

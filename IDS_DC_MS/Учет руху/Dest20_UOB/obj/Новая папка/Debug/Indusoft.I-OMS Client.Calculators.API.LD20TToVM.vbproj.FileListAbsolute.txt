@@ -1,0 +1,55 @@
+C:\Temp\Visual Studio 2008\projects\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\bin\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.dll
+C:\Temp\Visual Studio 2008\projects\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\bin\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.pdb
+C:\Temp\Visual Studio 2008\projects\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\bin\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.xml
+C:\Temp\Visual Studio 2008\projects\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\bin\Debug\Indusoft.OMSClient.CommonClasses.dll
+C:\Temp\Visual Studio 2008\projects\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\bin\Debug\InduSoft.IOMSSolver.dll
+C:\Temp\Visual Studio 2008\projects\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\bin\Debug\Indusoft.Common.DB.dll
+C:\Temp\Visual Studio 2008\projects\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\bin\Debug\Indusoft.Common.SvrDataProvider.dll
+C:\Temp\Visual Studio 2008\projects\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\bin\Debug\Indusoft.Common.Log.dll
+C:\Temp\Visual Studio 2008\projects\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\bin\Debug\Indusoft.Common.Functions.dll
+C:\Temp\Visual Studio 2008\projects\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\bin\Debug\Indusoft.Common.Formulas.dll
+C:\Temp\Visual Studio 2008\projects\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\bin\Debug\Indusoft.Common.Buffer.dll
+C:\Temp\Visual Studio 2008\projects\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\bin\Debug\Interop.ADOX.dll
+C:\Temp\Visual Studio 2008\projects\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\bin\Debug\Interop.ADODB.dll
+C:\Temp\Visual Studio 2008\projects\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\bin\Debug\Indusoft.Common.PI.dll
+C:\Temp\Visual Studio 2008\projects\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\bin\Debug\I-OMS-Solver-Interfaces.dll
+C:\Temp\Visual Studio 2008\projects\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\bin\Debug\Indusoft.OMS.Common.dll
+C:\Temp\Visual Studio 2008\projects\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\bin\Debug\Indusoft.OMSClient.CommonClasses.xml
+C:\Temp\Visual Studio 2008\projects\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\obj\Debug\ResolveAssemblyReference.cache
+C:\Temp\Visual Studio 2008\projects\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\obj\Debug\Indusoft.I_OMS_Client.Calculators.API.LD20TToVM.Resources.resources
+C:\Temp\Visual Studio 2008\projects\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\obj\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.vbproj.GenerateResource.Cache
+C:\Temp\Visual Studio 2008\projects\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\obj\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.dll
+C:\Temp\Visual Studio 2008\projects\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\obj\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.xml
+C:\Temp\Visual Studio 2008\projects\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\obj\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.pdb
+C:\TEMP\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\bin\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.dll
+C:\TEMP\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\bin\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.pdb
+C:\TEMP\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\bin\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.xml
+C:\TEMP\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\obj\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.vbprojResolveAssemblyReference.cache
+C:\TEMP\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\obj\Debug\Indusoft.I_OMS_Client.Calculators.API.LD20TToVM.Resources.resources
+C:\TEMP\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\obj\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.vbproj.GenerateResource.Cache
+C:\TEMP\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\obj\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.dll
+C:\TEMP\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\obj\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.xml
+C:\TEMP\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\obj\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.pdb
+D:\MyDocuments\Projects\ORLEN Lietva\I-OMS\Calculators\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\obj\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.vbprojResolveAssemblyReference.cache
+D:\MyDocuments\Projects\ORLEN Lietva\I-OMS\Calculators\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\obj\Debug\Indusoft.I_OMS_Client.Calculators.API.LD20TToVM.Resources.resources
+D:\MyDocuments\Projects\ORLEN Lietva\I-OMS\Calculators\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\obj\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.vbproj.GenerateResource.Cache
+D:\MyDocuments\Projects\ORLEN Lietva\I-OMS\Calculators\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\obj\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.vbproj.CoreCompileInputs.cache
+D:\MyDocuments\Projects\ORLEN Lietva\I-OMS\Calculators\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\obj\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.dll
+D:\MyDocuments\Projects\ORLEN Lietva\I-OMS\Calculators\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\obj\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.xml
+D:\MyDocuments\Projects\ORLEN Lietva\I-OMS\Calculators\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\obj\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.pdb
+C:\Users\UPG01SV-PI1S\Desktop\Indusoft.I-OMS Client.Calculators\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\bin\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.dll
+C:\Users\UPG01SV-PI1S\Desktop\Indusoft.I-OMS Client.Calculators\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\bin\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.pdb
+C:\Users\UPG01SV-PI1S\Desktop\Indusoft.I-OMS Client.Calculators\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\bin\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.xml
+C:\Users\UPG01SV-PI1S\Desktop\Indusoft.I-OMS Client.Calculators\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\obj\Debug\Indusoft.I_OMS_Client.Calculators.API.LD20TToVM.Resources.resources
+C:\Users\UPG01SV-PI1S\Desktop\Indusoft.I-OMS Client.Calculators\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\obj\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.vbproj.GenerateResource.Cache
+C:\Users\UPG01SV-PI1S\Desktop\Indusoft.I-OMS Client.Calculators\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\obj\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.dll
+C:\Users\UPG01SV-PI1S\Desktop\Indusoft.I-OMS Client.Calculators\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\obj\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.xml
+C:\Users\UPG01SV-PI1S\Desktop\Indusoft.I-OMS Client.Calculators\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\obj\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.pdb
+C:\Users\UPG01SV-PI1S\Desktop\Indusoft.I-OMS Client.Calculators\SH_Project\Dest20\bin\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.dll
+C:\Users\UPG01SV-PI1S\Desktop\Indusoft.I-OMS Client.Calculators\SH_Project\Dest20\bin\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.pdb
+C:\Users\UPG01SV-PI1S\Desktop\Indusoft.I-OMS Client.Calculators\SH_Project\Dest20\bin\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.xml
+C:\Users\UPG01SV-PI1S\Desktop\Indusoft.I-OMS Client.Calculators\SH_Project\Dest20\obj\Debug\Indusoft.I_OMS_Client.Calculators.API.LD20TToVM.Resources.resources
+C:\Users\UPG01SV-PI1S\Desktop\Indusoft.I-OMS Client.Calculators\SH_Project\Dest20\obj\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.vbproj.GenerateResource.Cache
+C:\Users\UPG01SV-PI1S\Desktop\Indusoft.I-OMS Client.Calculators\SH_Project\Dest20\obj\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.dll
+C:\Users\UPG01SV-PI1S\Desktop\Indusoft.I-OMS Client.Calculators\SH_Project\Dest20\obj\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.xml
+C:\Users\UPG01SV-PI1S\Desktop\Indusoft.I-OMS Client.Calculators\SH_Project\Dest20\obj\Debug\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.pdb

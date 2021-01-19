@@ -1,0 +1,7 @@
+E:\APPS\PIPC (x86)\ACE\ClassLibraries\TankCalcs\bin\Release\TankCalcs.dll
+E:\APPS\PIPC (x86)\ACE\ClassLibraries\TankCalcs\bin\Release\TankCalcs.pdb
+E:\APPS\PIPC (x86)\ACE\ClassLibraries\TankCalcs\bin\Release\TankCalcs.xml
+E:\APPS\PIPC (x86)\ACE\ClassLibraries\TankCalcs\bin\Release\ICalc-Main.dll
+E:\APPS\PIPC (x86)\ACE\ClassLibraries\TankCalcs\obj\Release\TankCalcs.dll
+E:\APPS\PIPC (x86)\ACE\ClassLibraries\TankCalcs\obj\Release\TankCalcs.xml
+E:\APPS\PIPC (x86)\ACE\ClassLibraries\TankCalcs\obj\Release\TankCalcs.pdb

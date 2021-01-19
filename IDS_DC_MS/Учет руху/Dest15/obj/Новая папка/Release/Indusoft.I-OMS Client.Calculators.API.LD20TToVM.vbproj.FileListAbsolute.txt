@@ -1,0 +1,4 @@
+C:\TEMP\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\obj\Release\Indusoft.I_OMS_Client.Calculators.API.LD20TToVM.Resources.resources
+C:\TEMP\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\Indusoft.I-OMS Client.Calculators.API.LD20TToVM\obj\Release\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.vbproj.GenerateResource.Cache
+C:\Users\UPG01SV-PI1S\Desktop\Indusoft.I-OMS Client.Calculators\SH_Project\Dest20\obj\Release\Indusoft.I_OMS_Client.Calculators.API.LD20TToVM.Resources.resources
+C:\Users\UPG01SV-PI1S\Desktop\Indusoft.I-OMS Client.Calculators\SH_Project\Dest20\obj\Release\Indusoft.I-OMS Client.Calculators.API.LD20TToVM.vbproj.GenerateResource.Cache

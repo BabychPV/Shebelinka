@@ -62,10 +62,18 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
+USE [PI_Temp]
+GO
+/****** Object:  StoredProcedure [dbo].[AF_GetReportData_Balance_oms]    Script Date: 19.01.2021 17:19:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
 -- =============================================
 -- Author:		Babych P.V
 -- Create date: 2020-11-13
--- Last modify: 2020-11-24
+-- Last modify: 2021-01-19
 -- Description:	Get Element PI AF
 -- =============================================
 ALTER PROCEDURE [dbo].[AF_GetReportData_Balance_oms]
@@ -137,7 +145,9 @@ DROP TABLE #GetBalanceTemp
 CREATE TABLE [dbo].[#GetBalanceTemp]
 (
    Element nvarchar(50) NULL
-  ,Attribute nvarchar(100)  NULL
+  ,Attribute nvarchar(200)  NULL
+  ,Path nvarchar(100)  NULL
+  ,Level nvarchar(5)  NULL
   ,Pos nvarchar(20) NULL
   ,IsInput  nvarchar(20) NULL
   ,Total nvarchar(100) null
@@ -153,7 +163,9 @@ DROP TABLE #GetBalance
 CREATE TABLE [dbo].[#GetBalance]
 (
    Element nvarchar(50) NULL
-  ,Attribute nvarchar(100)  NULL
+  ,Attribute nvarchar(200)  NULL
+  ,Path nvarchar(100)  NULL
+  ,Level nvarchar(100)  NULL
   ,Pos nvarchar(20) NULL
   ,IsInput  nvarchar(20) NULL
   ,Total decimal(10,3) null
@@ -170,18 +182,18 @@ CREATE TABLE [dbo].[#GetBalance]
 SET @LinkedServer = N'LINKEDAF_DB3333'
 SET @OPENQUERY = N'SELECT * FROM OPENQUERY('+ @LinkedServer + ','''
 
-	SET @TSQL = N'SELECT el.Name Element, ea.Name Attribute, ea.Description Pos,cat.name IsInput, s.ValueStr as Total, s1.ValueStr as Average, s2.ValueStr as Total6_18, s3.ValueStr as Total18_6,
+	SET @TSQL = N'SELECT el.Name Element, ea.Name Attribute, ea.Path path, ea.level, ea.Description Pos,cat.name IsInput, s.ValueDbl as Total, s1.ValueDbl as Average, s2.ValueDbl as Total6_18, s3.ValueDbl as Total18_6,
 				pr.Percent
 				FROM (SELECT ID,name FROM [ШВПГКН].[Asset].[Element] WHERE Name ='''''+@Unit+''''') el
 				INNER JOIN ШВПГКН.Asset.ElementAttribute ea ON ea.ElementID = el.ID
 				INNER JOIN ШВПГКН.Asset.ElementAttributeCategory eac ON eac.ElementAttributeID = ea.ID
 				INNER JOIN [ШВПГКН].[Asset].[Category] cat ON (eac.CategoryID = cat.ID and cat.Name in (''''Input'''',''''Output''''))
 				INNER JOIN (
-					SELECT replace(ea.path,''''\'''','''''''') name,s0.ValueStr Percent
+					SELECT ea.name,s0.ValueStr Percent
 					FROM ШВПГКН.Asset.ElementHierarchy eh
 					INNER JOIN ШВПГКН.Asset.ElementAttribute ea ON ea.ElementID = eh.ElementID
 					INNER JOIN ШВПГКН.Data.Snapshot s0 ON s0.ElementAttributeID = ea.ID
-					WHERE eh.Name = '''''+@Unit+''''' and ea.Description =''''%'''') pr on  pr.name = ea.Name
+					WHERE eh.Name = '''''+@Unit+''''' and ea.Description =''''%'''') pr on  pr.name = ea.Name+'''', %''''
 				CROSS APPLY ШВПГКН.Data.Summarize (ea.ID, N'''''+ convert(nvarchar(24),@CurrentMidnight,120) +''''', N'''''+ convert(nvarchar(24),@NextMidnight,120) +''''', N'''''+ @range24 +''''', N''''Total'''' , N''''TimeWeighted'''', N''''MostRecentTime'''') s
 				CROSS APPLY ШВПГКН.Data.Summarize (ea.ID, N'''''+ convert(nvarchar(24),@CurrentMidnight,120) +''''', N'''''+ convert(nvarchar(24),@NextMidnight,120) +''''', N'''''+ @range24 +''''', N''''Average'''' , N''''TimeWeighted'''', N''''MostRecentTime'''')  s1
 				CROSS APPLY ШВПГКН.Data.Summarize (ea.ID, N'''''+ convert(nvarchar(24),@CurrentRange_06,120) +''''', N'''''+ convert(nvarchar(24),@CurrentRange_18,120) +''''', N'''''+ @range12 +''''', N''''Total'''' , N''''TimeWeighted'''', N''''MostRecentTime'''')  s2
@@ -198,9 +210,10 @@ INSERT INTO [dbo].[LogRunQuery]([Query])
 
 	INSERT INTO #GetBalanceTemp
 	exec sp_executesql @TSQL
+--select * from  #GetBalanceTemp
 
-	INSERT INTO #GetBalance (Element, Attribute, Pos, IsInput, Total, Average,Total6_18,Total18_6,Total6_6,[Percent])
-	select  Element, Attribute, Pos, IsInput,
+	INSERT INTO #GetBalance (Element, Attribute, Path, Level, Pos, IsInput, Total, Average,Total6_18,Total18_6,Total6_6,[Percent])
+	select  Element, Attribute, Path, Level, Pos, IsInput,
 		case WHEN ISNUMERIC(Total) = 1 then Total else null end,
 		case WHEN ISNUMERIC(Average) = 1 then Average else null end,
 		case WHEN ISNUMERIC(Total6_18) = 1 then Total6_18 else null end,
@@ -211,12 +224,14 @@ INSERT INTO [dbo].[LogRunQuery]([Query])
 
 
 
-	select Element, Attribute, Pos, IsInput, Total, Average,Total6_18,Total18_6,Total6_6,[Percent] from #GetBalance
+	select Element, Attribute, Path, Level, Pos, IsInput, Total, Average,Total6_18,Total18_6,Total6_6,[Percent] from #GetBalance
 
 
 	DROP TABLE #GetBalance
 	DROP TABLE #GetBalanceTemp
 
 END
+
+
 
 

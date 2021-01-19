@@ -1,0 +1,144 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+Indusoft.I-OMSClient.Calculators.API.LD20TToVM_UOB
+</name>
+</assembly>
+<members>
+<member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.ResourceManager">
+	<summary>
+  Возвращает кэшированный экземпляр ResourceManager, использованный этим классом.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.Culture">
+	<summary>
+  Перезаписывает свойство CurrentUICulture текущего потока для всех
+  обращений к ресурсу с помощью этого класса ресурса со строгой типизацией.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.AmbTemperature">
+	<summary>
+  Ищет локализованную строку, похожую на Температура повітря.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.const_UID">
+	<summary>
+  Ищет локализованную строку, похожую на LD20TToVM_UOB.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.Density">
+	<summary>
+  Ищет локализованную строку, похожую на Густина робоча.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.Density15">
+	<summary>
+  Ищет локализованную строку, похожую на Густина15.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.Density20">
+	<summary>
+  Ищет локализованную строку, похожую на Густина20.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.Level">
+	<summary>
+  Ищет локализованную строку, похожую на Рівень.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.LevelD">
+	<summary>
+  Ищет локализованную строку, похожую на LevelD.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.MassDead">
+	<summary>
+  Ищет локализованную строку, похожую на Мертвий залишок.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.MassMax">
+	<summary>
+  Ищет локализованную строку, похожую на MassMax.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.MassTotal">
+	<summary>
+  Ищет локализованную строку, похожую на Маса.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.MassWork">
+	<summary>
+  Ищет локализованную строку, похожую на Маса продукту корисна.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.Path_AmbTemp">
+	<summary>
+  Ищет локализованную строку, похожую на Common|ObjectAliasNames|AmbTemperature.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.Path_Density">
+	<summary>
+  Ищет локализованную строку, похожую на Common|ObjectAliasNames|Density.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.Path_Density15">
+	<summary>
+  Ищет локализованную строку, похожую на Common|ObjectAliasNames|Density15.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.Path_Density20">
+	<summary>
+  Ищет локализованную строку, похожую на Common|ObjectAliasNames|Density20.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.Path_Level">
+	<summary>
+  Ищет локализованную строку, похожую на Common|ObjectAliasNames|Level.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.Path_MassDead">
+	<summary>
+  Ищет локализованную строку, похожую на Common|ObjectAliasNames|MassDead.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.Path_MassMax">
+	<summary>
+  Ищет локализованную строку, похожую на Common|ObjectAliasNames|MassMax.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.Path_MassTotal">
+	<summary>
+  Ищет локализованную строку, похожую на Common|ObjectAliasNames|MassTotal.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.Path_MassWork">
+	<summary>
+  Ищет локализованную строку, похожую на Common|ObjectAliasNames|MassWork.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.Path_TankState">
+	<summary>
+  Ищет локализованную строку, похожую на Common|ObjectAliasNames|TankState.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.Path_Temp">
+	<summary>
+  Ищет локализованную строку, похожую на Common|ObjectAliasNames|Temperature.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.Path_VolumeTotal">
+	<summary>
+  Ищет локализованную строку, похожую на Common|ObjectAliasNames|VolumeTotal.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.Path_VolumeWork">
+	<summary>
+  Ищет локализованную строку, похожую на Common|ObjectAliasNames|VolumeWork.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.TankState">
+	<summary>
+  Ищет локализованную строку, похожую на Стан резервуару.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.Temperature">
+	<summary>
+  Ищет локализованную строку, похожую на Температура.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.VolumeDead">
+	<summary>
+  Ищет локализованную строку, похожую на DeadVolume.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.VolumeMax">
+	<summary>
+  Ищет локализованную строку, похожую на MaxVolume.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.VolumeTotal">
+	<summary>
+  Ищет локализованную строку, похожую на Обєм продукту.
+</summary>
+</member><member name="P:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources.VolumeWork">
+	<summary>
+  Ищет локализованную строку, похожую на VolumeWork.
+</summary>
+</member><member name="T:Indusoft.I_OMS_Client.Calculators.API.LD20TToVM_UOB.My.Resources.Resources">
+	<summary>
+  Класс ресурса со строгой типизацией для поиска локализованных строк и т.д.
+</summary>
+</member>
+</members>
+</doc>
