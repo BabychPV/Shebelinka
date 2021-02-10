@@ -64,7 +64,7 @@ GO
 
 USE [PI_Temp]
 GO
-/****** Object:  StoredProcedure [dbo].[AF_GetReportData_Balance_oms]    Script Date: 19.01.2021 17:19:45 ******/
+/****** Object:  StoredProcedure [dbo].[AF_GetReportData_Balance_oms]    Script Date: 10.02.2021 15:57:19 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -73,12 +73,12 @@ GO
 -- =============================================
 -- Author:		Babych P.V
 -- Create date: 2020-11-13
--- Last modify: 2021-01-19
+-- Last modify: 2021-02-10
 -- Description:	Get Element PI AF
 -- =============================================
 ALTER PROCEDURE [dbo].[AF_GetReportData_Balance_oms]
 	@Date nvarchar(24) = '2020-10-26 23:59:59',
-	@Unit nvarchar(30) = 'ГФУ-1'
+	@Unit nvarchar(30) = 'УГФ-1'
 AS
 BEGIN
 
@@ -88,14 +88,17 @@ DECLARE @OPENQUERY				nvarchar(4000),
 		@TSQL					nvarchar(max),
 		@LinkedServer			nvarchar(4000),
 		@CurrentDate			date,
+		@PrevDate				datetime,
 		@InputDate				date,
+		@InputDateTime			datetime,
 		@TimeStamp				datetime,
-		@CurrentMidnight		datetime,
-		@NextMidnight			datetime,
-		@CurrentRange_06		datetime,
-		@CurrentRange_18		datetime,
-		@CurrentNextDateRange_18	datetime,
-		@NextRange_06			datetime,
+		@CurrentDateTime		datetime,
+		@CurrentMorning			datetime,
+		@NextMorning 			datetime,
+		@CurrentRange_07		datetime,
+		@CurrentRange_19		datetime,
+		@CurrentNextDateRange_19	datetime,
+		@NextRange_07			datetime,
 		@IDDate					bigint,
 		@range24				nvarchar(5) = '24h',
 		@range12				nvarchar(5) = '12h',
@@ -106,37 +109,65 @@ DECLARE @OPENQUERY				nvarchar(4000),
 -- Підготовка періоду
 	SET @TimeStamp			= GetDate();
 	SET	@CurrentDate		= convert(date,@TimeStamp,120);
+	SET @CurrentDateTime	= convert (datetime, @CurrentDate, 120);
+
+	SET @hour				= datepart(hh, @TimeStamp);
+	SET @minute				= datepart(mi, @TimeStamp);
 
 	SET	@InputDate			= convert(date,@Date,120);
+	SET @InputDateTime		= convert (datetime, @InputDate, 120);
 
 	if ( @CurrentDate <= @InputDate)
 		BEGIN
-			SET @hour						= datepart(hh, @TimeStamp);
-			SET @minute						= datepart(mi, @TimeStamp);
-			SET @CurrentMidnight			= convert (datetime, @CurrentDate, 120);
-			SET @NextMidnight				= dateadd (ss,0,dateadd (mi,@minute,dateadd (hh,@hour,@CurrentMidnight)));
-			SET @CurrentRange_06			= @CurrentMidnight;
-			SET @CurrentRange_18			= @NextMidnight;
-			SET @CurrentNextDateRange_18	= @CurrentMidnight;
-			SET @NextRange_06				= @NextMidnight;
-			if (@hour=0)
+			if (@hour < 7) -- В проміжок з 00:00 годин до 07:00
 				begin
-					SET @range24 = convert (nvarchar(5),@minute) + N'm';
+					SET @PrevDate					= dateadd (dd, -1, @InputDateTime);
+					SET @CurrentMorning				= dateadd (hh, 7, @PrevDate);
+					SET @NextMorning 				= dateadd (hh, @hour, @InputDateTime);
+					SET @CurrentRange_07			= @CurrentMorning;
+					SET @CurrentRange_19			= dateadd (ss,0,dateadd (mi,0,dateadd (hh,19,@PrevDate)));
+					SET @CurrentNextDateRange_19	= @CurrentRange_19;
+					SET @NextRange_07				= @NextMorning;
+					if (@hour=0)
+						begin
+							SET @range24 = convert (nvarchar(3),24-7) + N'h';
+						end
+					else
+						begin
+							SET @range24 = convert (nvarchar(3),24-@hour) + N'h';
+						end
+					SET @range12					= @range24;
 				end
+
 			else
-				begin
-					SET @range24 = convert (nvarchar(3),@hour) + N'h';
+				begin  -- В проміжок з 07:00 годин до * плинної
+
+					SET @CurrentMorning				= dateadd (hh, 7, @CurrentDateTime);
+					SET @NextMorning 				= dateadd (ss,0,dateadd (mi,0,dateadd (hh,@hour,@CurrentDateTime)));
+					SET @CurrentRange_07			= @CurrentMorning;
+					SET @CurrentRange_19			= @NextMorning ;
+					SET @CurrentNextDateRange_19	= @CurrentMorning;
+					SET @NextRange_07				= @NextMorning ;
+					if (@hour=7)
+						begin
+							SET @range24 = convert (nvarchar(5),@minute) + N'm';
+						end
+					else
+						begin
+							SET @range24 = convert (nvarchar(3),@hour-7) + N'h';
+						end
+					SET @range12					= @range24;
 				end
-			SET @range12					= @range24;
+
 		END
 	else
-		BEGIN
-			SET @CurrentMidnight			= convert(datetime, @InputDate, 120);
-			SET @NextMidnight				= convert(datetime, dateadd (day,+1,@InputDate), 120);
-			SET @CurrentRange_06			= dateadd (ss,0,dateadd (mi,0,dateadd (hh,06,@CurrentMidnight)));
-			SET @CurrentRange_18			= dateadd (ss,0,dateadd (mi,0,dateadd (hh,18,@CurrentMidnight)));
-			SET @CurrentNextDateRange_18	= @CurrentRange_18;
-			SET @NextRange_06				= dateadd (ss,0,dateadd (mi,0,dateadd (hh,06,@NextMidnight)));
+		BEGIN-- В проміжок з 07:00 годин до 07:00 архівний звіт
+			SET @CurrentMorning				= dateadd (hh, 7, @InputDateTime);
+			SET @NextMorning 				= dateadd (hh, 7, dateadd (day,+1,@InputDateTime));
+			SET @CurrentRange_07			= @CurrentMorning;
+			SET @CurrentRange_19			= dateadd (ss,0,dateadd (mi,0,dateadd (hh,19,@InputDateTime)));
+			SET @CurrentNextDateRange_19	= @CurrentRange_19;
+			SET @NextRange_07				= @NextMorning;
 		END
 
 -- Проміжна таблица
@@ -194,10 +225,10 @@ SET @OPENQUERY = N'SELECT * FROM OPENQUERY('+ @LinkedServer + ','''
 					INNER JOIN ШВПГКН.Asset.ElementAttribute ea ON ea.ElementID = eh.ElementID
 					INNER JOIN ШВПГКН.Data.Snapshot s0 ON s0.ElementAttributeID = ea.ID
 					WHERE eh.Name = '''''+@Unit+''''' and ea.Description =''''%'''') pr on  pr.name = ea.Name+'''', %''''
-				CROSS APPLY ШВПГКН.Data.Summarize (ea.ID, N'''''+ convert(nvarchar(24),@CurrentMidnight,120) +''''', N'''''+ convert(nvarchar(24),@NextMidnight,120) +''''', N'''''+ @range24 +''''', N''''Total'''' , N''''TimeWeighted'''', N''''MostRecentTime'''') s
-				CROSS APPLY ШВПГКН.Data.Summarize (ea.ID, N'''''+ convert(nvarchar(24),@CurrentMidnight,120) +''''', N'''''+ convert(nvarchar(24),@NextMidnight,120) +''''', N'''''+ @range24 +''''', N''''Average'''' , N''''TimeWeighted'''', N''''MostRecentTime'''')  s1
-				CROSS APPLY ШВПГКН.Data.Summarize (ea.ID, N'''''+ convert(nvarchar(24),@CurrentRange_06,120) +''''', N'''''+ convert(nvarchar(24),@CurrentRange_18,120) +''''', N'''''+ @range12 +''''', N''''Total'''' , N''''TimeWeighted'''', N''''MostRecentTime'''')  s2
-				CROSS APPLY ШВПГКН.Data.Summarize (ea.ID, N'''''+ convert(nvarchar(24),@CurrentNextDateRange_18,120) +''''', N'''''+ convert(nvarchar(24),@NextRange_06,120) +''''', N'''''+ @range12 +''''', N''''Total'''' , N''''TimeWeighted'''', N''''MostRecentTime'''')  s3
+				CROSS APPLY ШВПГКН.Data.Summarize (ea.ID, N'''''+ convert(nvarchar(24),@CurrentMorning,120) +''''', N'''''+ convert(nvarchar(24),@NextMorning ,120) +''''', N'''''+ @range24 +''''', N''''Total'''' , N''''TimeWeighted'''', N''''MostRecentTime'''') s
+				CROSS APPLY ШВПГКН.Data.Summarize (ea.ID, N'''''+ convert(nvarchar(24),@CurrentMorning,120) +''''', N'''''+ convert(nvarchar(24),@NextMorning ,120) +''''', N'''''+ @range24 +''''', N''''Average'''' , N''''TimeWeighted'''', N''''MostRecentTime'''')  s1
+				CROSS APPLY ШВПГКН.Data.Summarize (ea.ID, N'''''+ convert(nvarchar(24),@CurrentRange_07,120) +''''', N'''''+ convert(nvarchar(24),@CurrentRange_19,120) +''''', N'''''+ @range12 +''''', N''''Total'''' , N''''TimeWeighted'''', N''''MostRecentTime'''')  s2
+				CROSS APPLY ШВПГКН.Data.Summarize (ea.ID, N'''''+ convert(nvarchar(24),@CurrentNextDateRange_19,120) +''''', N'''''+ convert(nvarchar(24),@NextRange_07,120) +''''', N'''''+ @range12 +''''', N''''Total'''' , N''''TimeWeighted'''', N''''MostRecentTime'''')  s3
 				where ea.ValueType = N''''Single''''
 				OPTION (FORCE ORDER, EMBED ERRORS)'')';
 
@@ -223,7 +254,6 @@ INSERT INTO [dbo].[LogRunQuery]([Query])
 	from #GetBalanceTemp
 
 
-
 	select Element, Attribute, Path, Level, Pos, IsInput, Total, Average,Total6_18,Total18_6,Total6_6,[Percent] from #GetBalance
 
 
@@ -231,6 +261,8 @@ INSERT INTO [dbo].[LogRunQuery]([Query])
 	DROP TABLE #GetBalanceTemp
 
 END
+
+
 
 
 

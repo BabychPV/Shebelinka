@@ -355,7 +355,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>з 06:00</Value>
+                                  <Value>з 07:00</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -368,7 +368,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>до 18:00, т</Value>
+                                  <Value>до 19:00, т</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -414,6 +414,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -425,7 +426,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>з 18:00</Value>
+                                  <Value>з 19:00</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -438,7 +439,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>до 06:00, т</Value>
+                                  <Value>до 07:00, т</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -484,6 +485,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -540,6 +542,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -551,7 +554,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>з 00:00</Value>
+                                  <Value>з 07:00</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -564,7 +567,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>до 24:00, т</Value>
+                                  <Value>до 07:00, т</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -610,6 +613,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>

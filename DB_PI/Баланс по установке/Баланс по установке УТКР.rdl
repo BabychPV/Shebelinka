@@ -348,14 +348,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox20">
+                        <Textbox Name="Textbox21">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>з 06:00</Value>
+                                  <Value>з 07:00</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -368,7 +368,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>до 18:00, т</Value>
+                                  <Value>до 19:00, т</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -414,18 +414,19 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="PO_End7">
+                        <Textbox Name="PO_End8">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>з 18:00</Value>
+                                  <Value>з 19:00</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -438,7 +439,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>до 06:00, т</Value>
+                                  <Value>до 07:00, т</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -488,7 +489,7 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox26">
+                        <Textbox Name="Textbox28">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -544,14 +545,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox239">
+                        <Textbox Name="Textbox240">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>з 00:00</Value>
+                                  <Value>з 07:00</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -564,7 +565,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>до 24:00, т</Value>
+                                  <Value>до 07:00, т</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
