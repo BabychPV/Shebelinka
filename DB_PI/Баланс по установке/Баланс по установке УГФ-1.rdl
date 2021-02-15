@@ -122,7 +122,15 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>="За період: " + Parameters!Date.Value + " 00:00:00 - " + IIf(DateValue(Now) &lt;= Parameters!Date.Value, Now, DateAdd("d", 1, Parameters!Date.Value) + " 00:00:00")</Value>
+                    <Value>="За період: " +
+                           IIf(DateValue(Now) <= Parameters!Date.Value,
+
+                           	IIf(Hour(Now)>0 AND Hour(Now)<7, DateAdd("d", -1, Parameters!Date.Value) + " 07:00:00 - " + Now, Parameters!Date.Value + " 07:00:00 - " + Now),
+                           	IIf((Day(Now) - Day(Parameters!Date.Value))=1,
+                           		IIf(Hour(Now)>0 AND Hour(Now)<7, Parameters!Date.Value + " 07:00:00 - " + Now, Parameters!Date.Value + " 07:00:00 - " + DateAdd("d", 1, Parameters!Date.Value) + " 07:00:00"),
+                           		Parameters!Date.Value + " 07:00:00 - " + DateAdd("d", 1, Parameters!Date.Value) + " 07:00:00"
+                           ))
+</Value>
                     <Style />
                   </TextRun>
                 </TextRuns>
