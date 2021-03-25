@@ -122,6 +122,7 @@ from (
 --остатки на конец
 	select
 		cast(0 as int) as IsNach
+		,p.id as ProdId
 		,ost.[Nom_NAME] as [ProductName]
 		,pg.[Name] as [GroupName]
 		,pc.[Name] as [CategoryName]
@@ -136,12 +137,13 @@ from (
 		and VID = 'Общие'
 		and ost.[NOM_ID] not in (52) --Берем все кроме: 52-Вода
 		and ost.MVZ_ID in (select id from @Parents)
-	group by   ost.[Nom_NAME],pg.[Name],pc.[Name]
+	group by   ost.[Nom_NAME],p.Id,pg.[Name],pc.[Name]
 
 --остатки на начало
 	union all
 	select
 		cast(1 as int) as IsNach
+		,p.id as ProdId
 		,ost.[Nom_NAME] as [ProductName]
 		,pg.[Name] as [GroupName]
 		,pc.[Name] as [CategoryName]
@@ -156,12 +158,13 @@ from (
 		and VID = 'Общие'
 		and ost.[NOM_ID] not in (52) --Берем все кроме: 52-Вода
 		and ost.MVZ_ID in (select id from @Parents)
-	group by   ost.[Nom_NAME],pg.[Name],pc.[Name]
+	group by   ost.[Nom_NAME],p.Id,pg.[Name],pc.[Name]
 
 -- залишки на початок місяца
 	union all
 	select
 		cast(2 as int) as IsNach
+		,p.id as ProdId
 		,ost.[Nom_NAME] as [ProductName]
 		,pg.[Name] as [GroupName]
 		,pc.[Name] as [CategoryName]
@@ -176,7 +179,7 @@ from (
 		and VID = 'Общие'
 		and ost.[NOM_ID] not in (52) --Берем все кроме: 52-Вода
 		and ost.MVZ_ID in (select id from @Parents)
-	group by   ost.[Nom_NAME],pg.[Name],pc.[Name]
+	group by   ost.[Nom_NAME],p.Id,pg.[Name],pc.[Name]
 	) tmp
 
 
@@ -188,6 +191,7 @@ IF ( OBJECT_ID('tempdb..#Movement') IS NOT NULL)
 DROP TABLE #Movement
 CREATE TABLE [dbo].[#Movement]
 (
+	[ProdId] int null,
 	[Type] [int] NULL,
 	[ProductName] [nvarchar](250) COLLATE Cyrillic_General_CI_AS NULL,
 	[GroupName] [nvarchar](250) COLLATE Cyrillic_General_CI_AS NULL,
@@ -200,7 +204,8 @@ insert into #Movement
 select * from (
 	--Приход день
 		select
-			CAST(1 as int) as [Type]
+			p.id as ProdId
+			,CAST(1 as int) as [Type]
 			,p.[Name] AS [ProductName]
 			,pg.[Name] AS [GroupName]
 			,pc.[Name] AS [CategoryName]
@@ -211,11 +216,12 @@ select * from (
 			left join [dbo].[ProductGroups] pg on pg.Id = p.GroupId
 		where ioa.CaseId in (select id from #Cases)
 			and MVZ_IST_kod is null
-		group by p.[Name],pc.[Name],pg.[Name]
+		group by p.[Name],p.Id,pc.[Name],pg.[Name]
 	--Расход день
 	union all
 		select
-			CAST(2 as int) as [Type]
+			p.id as ProdId
+			,CAST(2 as int) as [Type]
 			,p.[Name] AS [ProductName]
 			,pg.[Name] AS [GroupName]
 			,pc.[Name] AS [CategoryName]
@@ -226,11 +232,12 @@ select * from (
 			left join [dbo].[ProductGroups] pg on pg.Id = p.GroupId
 		where ioa.CaseId in (select id from #Cases)
 			and  MVZ_PRIEM_KOD is null
-		group by p.[Name],pc.[Name],pg.[Name]
+		group by p.[Name],p.Id,pc.[Name],pg.[Name]
 	union all
 	--Приход місяць
 		select
-			CAST(3 as int) as [Type]
+			p.id as ProdId
+			,CAST(3 as int) as [Type]
 			,p.[Name] AS [ProductName]
 			,pg.[Name] AS [GroupName]
 			,pc.[Name] AS [CategoryName]
@@ -241,11 +248,12 @@ select * from (
 			left join [dbo].[ProductGroups] pg on pg.Id = p.GroupId
 		where ioa.CaseId = @caseIdBegMonth
 			and MVZ_IST_kod is null
-		group by p.[Name],pc.[Name],pg.[Name]
+		group by p.[Name],p.Id,pc.[Name],pg.[Name]
 	--Расход місяць
 	union all
 		select
-			CAST(4 as int) as [Type]
+			p.id as ProdId
+			,CAST(4 as int) as [Type]
 			,p.[Name] AS [ProductName]
 			,pg.[Name] AS [GroupName]
 			,pc.[Name] AS [CategoryName]
@@ -256,7 +264,7 @@ select * from (
 			left join [dbo].[ProductGroups] pg on pg.Id = p.GroupId
 		where ioa.CaseId = @caseIdBegMonth
 			and  MVZ_PRIEM_KOD is null
-		group by p.[Name],pc.[Name],pg.[Name]
+		group by p.[Name],p.Id,pc.[Name],pg.[Name]
 
 ) tmp
 --***************
@@ -268,9 +276,9 @@ DROP TABLE #PivotOstatki
 
 select * into #PivotOstatki
 FROM (
-	SELECT GroupName, CategoryName, ProductName, [1] AS BalanceBeginningToday, [0] AS BalanceEndToday, [2] AS BalanceBeginningMonth
+	SELECT ProdId,GroupName, CategoryName, ProductName, [1] AS BalanceBeginningToday, [0] AS BalanceEndToday, [2] AS BalanceBeginningMonth
 	FROM
-	(select GroupName, CategoryName, IsNach, ProductName, Value
+	(select ProdId, GroupName, CategoryName, IsNach, ProductName, Value
 		from #Ostatki) p
 	PIVOT(
 	SUM (Value)
@@ -284,9 +292,9 @@ DROP TABLE #PivotMovement
 
 select * into #PivotMovement
 FROM (
-	SELECT ProductName, GroupName, CategoryName, [2] AS [OutputToday], [1]  AS [InputToday], [3] AS [OutputMonth], [4]  AS [InputMonth]
+	SELECT ProdId, ProductName, GroupName, CategoryName, [2] AS [OutputToday], [1]  AS [InputToday], [3] AS [OutputMonth], [4]  AS [InputMonth]
 	FROM
-	(select GroupName, CategoryName, ProductName, Reconciled, [Type]
+	(select ProdId, GroupName, CategoryName, ProductName, Reconciled, [Type]
 		from #Movement
 	) p
 	PIVOT(
@@ -316,6 +324,12 @@ select
 		CASE WHEN T1.ProductName  IS NULL then T2.ProductName ELSE T1.ProductName end as ProductName
 		,isnull(T1.GroupName,T2.GroupName) as GroupName
 		,isnull(T1.CategoryName,T2.CategoryName) as CategoryName
+		,CASE (isnull(T1.CategoryName,T2.CategoryName)) WHEN 'Сировина' THEN 1
+														WHEN 'Компонент' THEN 2
+														WHEN 'Товар' THEN 3
+														WHEN 'Втрати' THEN 4
+		END as SortToGroup
+		,T3.SortIndex as SortToProd
 		,[OutputToday]
 		,[InputToday]
 		,[OutputMonth]
@@ -326,6 +340,7 @@ select
 
 		FROM		#PivotMovement as T1
 		FULL  JOIN  #PivotOstatki T2  on (T1.ProductName = T2.ProductName)
+		inner join [dbo].[Sorting] T3 on (isnull(T1.ProdId,T2.ProdId) = T3.ProductId)
 
 drop table #Movement
 drop table #Ostatki
@@ -359,7 +374,7 @@ DECLARE
 --************ DEBUG
 	--select @firstDayOfNextMonth
 --************ DEBUG
-			select convert (date, max(EndTime), 120)  LastEndTime from cases where StartTime <= @firstDayOfNextMonth
+			select convert (date, max(EndTime))  LastEndTime from cases where StartTime <= @firstDayOfNextMonth
 		END
 	ELSE
-		select convert(date, GetDAte(),120)
+		select convert(date, GetDAte()) LastEndTime
